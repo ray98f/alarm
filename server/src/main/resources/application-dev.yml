@@ -1,0 +1,25 @@
+sys:
+  port: 8083
+  checklogin: false
+spring:
+  rabbitmq:
+    host: 192.168.30.108
+    port: 5672
+    username: root
+    password: Zxwz@123!@#
+  jackson:
+    date-format: "yyyy-MM-dd HH:mm:ss"
+snmp:
+  transfer:
+    lineCode: 0
+    systemCode: 0
+    community: public
+    targetIP: "udp:127.0.0.1/161"
+    listenIP: "udp:127.0.0.1/1162"
+    charset: gbk
+  tel:
+    lineCode: 0
+    systemCode: 0
+    community: public
+    targetIP: "udp:127.0.0.1/161"
+    listenIP: "udp:127.0.0.1/1163"

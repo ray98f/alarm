@@ -1,0 +1,25 @@
+sys:
+  port: 8082
+  checklogin: true
+spring:
+  rabbitmq:
+    addresses: 10.20.10.187:5672, 10.20.10.188:5672
+    username: yly
+    password: 123456
+    virtual-host: wzmtr
+  jackson:
+    date-format: "yyyy-MM-dd HH:mm:ss"
+snmp:
+  transfer:
+    lineCode: 0
+    systemCode: 0
+    community: public
+    targetIP: "udp:127.0.0.1/161"
+    listenIP: "udp:127.0.0.1/1162"
+    charset: gbk
+  tel:
+    lineCode: 0
+    systemCode: 0
+    community: public
+    targetIP: "udp:127.0.0.1/161"
+    listenIP: "udp:127.0.0.1/1163"
