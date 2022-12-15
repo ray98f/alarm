@@ -142,7 +142,7 @@ public class EchoMessageEventListener extends DefaultGjkzMessageEventListener {
         log.info("回复客户端'{}'心跳响应:{}", channel.id().asShortText(), CommonUtil.bytesToHexString(buf.array()));
 
         messageSender.sendHeartbeat(new ArrayList() {{
-            add(new Heartbeat(channel.getSystemCode(), channel.getLineCode(), LocalDateTime.now()));
+            add(new Heartbeat(channel.getLineCode(), channel.getSystemCode(), LocalDateTime.now()));
         }});
     }
 
@@ -157,7 +157,7 @@ public class EchoMessageEventListener extends DefaultGjkzMessageEventListener {
         }
 
         messageSender.sendHeartbeat(new ArrayList() {{
-            add(new Heartbeat(channel.getSystemCode(), channel.getLineCode(), LocalDateTime.now()));
+            add(new Heartbeat(channel.getLineCode(), channel.getSystemCode(), LocalDateTime.now()));
         }});
 
         channel.setLastHeartbeatTime(System.nanoTime());
@@ -233,7 +233,7 @@ public class EchoMessageEventListener extends DefaultGjkzMessageEventListener {
         messageSender.sendAlarm(alarmList);
 
         messageSender.sendHeartbeat(new ArrayList() {{
-            add(new Heartbeat(channel.getSystemCode(), channel.getLineCode(), LocalDateTime.now()));
+            add(new Heartbeat(channel.getLineCode(), channel.getSystemCode(), LocalDateTime.now()));
         }});
     }
 
@@ -250,7 +250,7 @@ public class EchoMessageEventListener extends DefaultGjkzMessageEventListener {
         log.info("收到'{}'控制响应:{}", channel.id().asShortText(), message);
 
         messageSender.sendHeartbeat(new ArrayList() {{
-            add(new Heartbeat(channel.getSystemCode(), channel.getLineCode(), LocalDateTime.now()));
+            add(new Heartbeat(channel.getLineCode(), channel.getSystemCode(), LocalDateTime.now()));
         }});
     }
 
@@ -267,7 +267,7 @@ public class EchoMessageEventListener extends DefaultGjkzMessageEventListener {
         log.info("收到'{}'控制结果请求:{}", channel.id().asShortText(), message);
 
         messageSender.sendHeartbeat(new ArrayList() {{
-            add(new Heartbeat(channel.getSystemCode(), channel.getLineCode(), LocalDateTime.now()));
+            add(new Heartbeat(channel.getLineCode(), channel.getSystemCode(), LocalDateTime.now()));
         }});
 
 
@@ -292,7 +292,7 @@ public class EchoMessageEventListener extends DefaultGjkzMessageEventListener {
         log.info("收到'{}'读响应:{}", channel.id().asShortText(), message);
 
         messageSender.sendHeartbeat(new ArrayList() {{
-            add(new Heartbeat(channel.getSystemCode(), channel.getLineCode(), LocalDateTime.now()));
+            add(new Heartbeat(channel.getLineCode(), channel.getSystemCode(), LocalDateTime.now()));
         }});
     }
 }
