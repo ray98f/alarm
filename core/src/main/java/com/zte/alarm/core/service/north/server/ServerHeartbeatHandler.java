@@ -27,10 +27,10 @@ public class ServerHeartbeatHandler extends ChannelInboundHandlerAdapter {
             } else if (e.state() == ServerIdleState.READER_IDLE) {
                 ctx.channel().close();
             } else if (e.state() == ServerIdleState.HEARTBEAT_IDLE) {
-                log.info("长时间未收到客户端心跳数据,断开连接.");
+//                log.warn("长时间未收到客户端心跳数据,断开连接.");
                 ctx.channel().close();
             } else {
-                log.info("长时间未收读写数据,断开连接.");
+//                log.warn("长时间未收读写数据,断开连接.");
                 ctx.channel().close();
             }
         }
@@ -42,7 +42,10 @@ public class ServerHeartbeatHandler extends ChannelInboundHandlerAdapter {
         ByteBuf buf = (ByteBuf) msg;
         byte[] barray = new byte[buf.readableBytes()];
         buf.getBytes(0, barray);
-        logger.info("收到数据:{}", CommonUtil.bytesToHexString(barray));
+        String str = CommonUtil.bytesToHexString(barray);
+        if (!str.startsWith("03 00")) {
+            logger.info("收到数据:{}", CommonUtil.bytesToHexString(barray));
+        }
         super.channelRead(ctx, msg);
     }
 }

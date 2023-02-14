@@ -131,15 +131,13 @@ public class EchoMessageEventListener extends DefaultGjkzMessageEventListener {
                 return;
             }
         }
-        channel.setLastHeartbeatTime(System.nanoTime());
-        log.info("收到'{}'心跳请求:{}", channel.id().asShortText(), message);
 
+        channel.setLastHeartbeatTime(System.nanoTime());
+//        log.info("收到'{}'心跳请求:{}", channel.id().asShortText(), message);
         GjkzMessage pingResp = new GjkzMessage(new GjkzFixedHeader(GjkzMessageType.PINGRESP, 0));
         channel.writeAndFlush(pingResp);
-
-
         ByteBuf buf = GjkzEncoder.doEncode(pingResp);
-        log.info("回复客户端'{}'心跳响应:{}", channel.id().asShortText(), CommonUtil.bytesToHexString(buf.array()));
+//        log.info("回复客户端'{}'心跳响应:{}", channel.id().asShortText(), CommonUtil.bytesToHexString(buf.array()));
 
         messageSender.sendHeartbeat(new ArrayList() {{
             add(new Heartbeat(channel.getLineCode(), channel.getSystemCode(), LocalDateTime.now()));
