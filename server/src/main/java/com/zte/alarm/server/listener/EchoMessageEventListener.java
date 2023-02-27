@@ -123,15 +123,16 @@ public class EchoMessageEventListener extends DefaultGjkzMessageEventListener {
 
     @Override
     public void pingReq(WrappedChannel channel, GjkzMessage message) {
-
         if (checkLogin) {
             if (channel.getClientId() == null || channel.getClientId().length() == 0) {
                 log.info("用户未登录,关闭连接.");
                 disConnect(channel, message);
                 return;
             }
+//            if (channel.getClientId().contains("12_2")) {
+//                log.info("pingReq channel:" + channel.getClientId());
+//            }
         }
-
         channel.setLastHeartbeatTime(System.nanoTime());
 //        log.info("收到'{}'心跳请求:{}", channel.id().asShortText(), message);
         GjkzMessage pingResp = new GjkzMessage(new GjkzFixedHeader(GjkzMessageType.PINGRESP, 0));
@@ -153,7 +154,6 @@ public class EchoMessageEventListener extends DefaultGjkzMessageEventListener {
                 return;
             }
         }
-
         messageSender.sendHeartbeat(new ArrayList() {{
             add(new Heartbeat(channel.getLineCode(), channel.getSystemCode(), LocalDateTime.now()));
         }});
