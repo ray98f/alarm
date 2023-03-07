@@ -113,7 +113,8 @@ public class TransferSnmpCommandResponder extends SnmpCommandResponder {
         }
 
 
-        SnmpAlarm snmpAlarm = new SnmpAlarm(lineCode, systemCode, isCleared, alarmManagedObjectInstanceName, alarmSpecificProblem, emsAlarmCode, alarmNetype, alarmTime, alarmMessage);
+        SnmpAlarm snmpAlarm = new SnmpAlarm(lineCode, systemCode, isCleared, alarmManagedObjectInstanceName,
+            alarmSpecificProblem, emsAlarmCode, alarmNetype, alarmTime, alarmMessage, null);
 
         log.trace("snmp alarm:{}", snmpAlarm);
 

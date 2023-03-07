@@ -1,0 +1,20 @@
+spring:
+  rabbitmq:
+    addresses: 10.20.10.187:5672, 10.20.10.188:5672
+    username: yly
+    password: 123456
+    virtual-host: wzmtr
+  jackson:
+    date-format: "yyyy-MM-dd HH:mm:ss"
+  profiles:
+    active: ${ENV:dev}
+snmp:
+  config:
+    - type: UME
+      lineCode: 2
+      systemCode: 1
+      listen: udp:0.0.0.0/162
+    - type: U31
+      lineCode: 2
+      systemCode: 2
+      listen: udp:0.0.0.0/163

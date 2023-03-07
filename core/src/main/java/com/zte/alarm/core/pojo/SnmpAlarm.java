@@ -13,6 +13,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 public class SnmpAlarm {
+
     /**
      * 线路编号
      */
@@ -51,4 +52,8 @@ public class SnmpAlarm {
      * 附加信息
      */
     private List<AlarmMessage> messages;
+    /**
+     * 车站代码
+     */
+    private Integer stationCode;
 }

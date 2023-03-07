@@ -50,16 +50,16 @@ public class TelSnmpCommand implements SnmpCommand {
 
             //TODO 确认时间格式
             SnmpAlarm snmpAlarm = new SnmpAlarm(
-                    snmpServer.getLineCode(),
-                    snmpServer.getSystemCode(),
-                    false,
-                    row.get(TelSnmpConstants.ALARM_MANAGED_OBJECT_INSTANCE.toString()).getValue(),
-                    row.get(TelSnmpConstants.ALARM_SPECIFIC_PROBLEM.toString()).getValue(),
-                    row.get(TelSnmpConstants.ALARM_CODE.toString()).getValue(),
-                    row.get(TelSnmpConstants.ALARM_NETYPE.toString()).getValue(),
-                    LocalDateTime.parse(row.get(TelSnmpConstants.ALARM_EVENT_TIME.toString()).getValue(),
-                            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
-                    alarmMessageList);
+                snmpServer.getLineCode(),
+                snmpServer.getSystemCode(),
+                false,
+                row.get(TelSnmpConstants.ALARM_MANAGED_OBJECT_INSTANCE.toString()).getValue(),
+                row.get(TelSnmpConstants.ALARM_SPECIFIC_PROBLEM.toString()).getValue(),
+                row.get(TelSnmpConstants.ALARM_CODE.toString()).getValue(),
+                row.get(TelSnmpConstants.ALARM_NETYPE.toString()).getValue(),
+                LocalDateTime.parse(row.get(TelSnmpConstants.ALARM_EVENT_TIME.toString()).getValue(),
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
+                alarmMessageList, null);
             snmpAlarms.add(snmpAlarm);
         }
         return snmpAlarms;
