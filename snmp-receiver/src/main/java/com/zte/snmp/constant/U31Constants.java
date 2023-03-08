@@ -16,15 +16,15 @@ public final class U31Constants {
         /**
          * 告警恢复
          */
-        String RecoverAlarm = ".1.3.6.1.4.1.3902.4101.1.4.1.2";
+        String RecoverAlarm = "1.3.6.1.4.1.3902.4101.1.4.1.2";
         /**
          * 告警生成
          */
-        String CreateAlarm = ".1.3.6.1.4.1.3902.4101.1.4.1.1";
+        String CreateAlarm = "1.3.6.1.4.1.3902.4101.1.4.1.1";
         /**
          * 心跳
          */
-        String Heart = ".1.3.6.1.6.3.1.1.5.1";
+        String Heart = "1.3.6.1.4.1.3902.4101.4.2.1.1";
     }
 
     public interface Alarm {

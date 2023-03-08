@@ -7,9 +7,6 @@ import com.zte.snmp.constant.U31Constants;
 import com.zte.snmp.constant.U31Constants.Alarm;
 import com.zte.snmp.constant.U31Constants.Type;
 import com.zte.snmp.util.MessageSender;
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Collections;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +15,9 @@ import org.snmp4j.CommandResponderEvent;
 import org.snmp4j.PDU;
 import org.snmp4j.smi.OID;
 import org.snmp4j.smi.VariableBinding;
+
+import java.time.LocalDateTime;
+import java.util.Arrays;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -46,16 +46,17 @@ public class U31CommandResponderImpl implements IBaseCommandImpl, CommandRespond
                 SnmpAlarm dto = null;
                 switch (type.format()) {
                     case Type.CreateAlarm:
-                        log.debug("告警产生");
+                        log.info(systemCode + "系统,告警产生");
                         dto = getAlarmDto(pdu, timeStr);
                         dto.setCleared(false);
                         break;
                     case Type.RecoverAlarm:
-                        log.debug("告警恢复");
+                        log.info(systemCode + "系统,告警恢复");
                         dto = getAlarmDto(pdu, timeStr);
                         dto.setCleared(true);
                         break;
                     case Type.Heart:
+                        log.info(systemCode + "系统,心跳");
                         messageSender.sendHeartbeat(
                             Arrays.asList(new Heartbeat(lineCode, systemCode, LocalDateTime.now())));
                         break;

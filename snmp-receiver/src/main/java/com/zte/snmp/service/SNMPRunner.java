@@ -3,8 +3,6 @@ package com.zte.snmp.service;
 import com.zte.snmp.config.SnmpSetting;
 import com.zte.snmp.config.SnmpSetting.Item;
 import com.zte.snmp.util.MessageSender;
-import java.io.IOException;
-import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.snmp4j.MessageDispatcherImpl;
@@ -22,6 +20,9 @@ import org.snmp4j.util.MultiThreadedMessageDispatcher;
 import org.snmp4j.util.ThreadPool;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+import java.io.IOException;
+
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -31,36 +32,35 @@ public class SNMPRunner {
     private final MessageSender messageSender;
 
     @PostConstruct
-    public void inti() throws IOException {
+    public void init() throws IOException {
         log.info("启动SNMP转化器");
         ThreadPool threadPool = ThreadPool.create("trap", 2);
         MultiThreadedMessageDispatcher dispatcher = new MultiThreadedMessageDispatcher(threadPool,
-            new MessageDispatcherImpl());
-        SnmpSetting config = snmpSetting;
-        for (Item item : config.getConfig()) {
-            Address address = GenericAddress.parse(item.getListen());
-            TransportMapping transport;
-            if (address instanceof UdpAddress) {
-                transport = new DefaultUdpTransportMapping((UdpAddress) address);
-            } else {
-                transport = new DefaultTcpTransportMapping((TcpAddress) address);
-            }
-            Snmp snmp = new Snmp(dispatcher, transport);
-            snmp.getMessageDispatcher().addMessageProcessingModel(new MPv2c());
-            snmp.getMessageDispatcher().addMessageProcessingModel(new MPv1());
-            switch (item.getType()) {
-                case UME:
-                    snmp.addCommandResponder(
-                        new UMECommandResponderImpl(item.getLineCode(), item.getSystemCode(), messageSender,
-                            snmpSetting));
-                    break;
-                case U31:
-                    snmp.addCommandResponder(
-                        new U31CommandResponderImpl(item.getLineCode(), item.getSystemCode(), messageSender,
-                            snmpSetting));
-                    break;
-            }
-            snmp.listen();
+                new MessageDispatcherImpl());
+        Item item = snmpSetting.getConfig();
+        Address address = GenericAddress.parse(item.getListen());
+        TransportMapping transport;
+        if (address instanceof UdpAddress) {
+            transport = new DefaultUdpTransportMapping((UdpAddress) address);
+        } else {
+            transport = new DefaultTcpTransportMapping((TcpAddress) address);
         }
+        Snmp snmp = new Snmp(dispatcher, transport);
+        snmp.getMessageDispatcher().addMessageProcessingModel(new MPv2c());
+        snmp.getMessageDispatcher().addMessageProcessingModel(new MPv1());
+        switch (item.getType()) {
+            case UME:
+                snmp.addCommandResponder(
+                        new UMECommandResponderImpl(item.getLineCode(), item.getSystemCode(), messageSender,
+                                snmpSetting));
+                break;
+            case U31:
+                snmp.addCommandResponder(
+                        new U31CommandResponderImpl(item.getLineCode(), item.getSystemCode(), messageSender,
+                                snmpSetting));
+                break;
+        }
+        snmp.listen();
+
     }
 }
