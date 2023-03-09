@@ -47,17 +47,17 @@ public final class UMEConstants {
     }
 
     public interface Alarm {
-
-        String AlarmCodeName = ".1.3.6.1.4.1.3902.4101.1.3.1.14";
         /**
          * 告警码
          */
         String AlarmCode = ".1.3.6.1.4.1.3902.4101.1.3.1.11";
-        String AlarmId = ".1.3.6.1.4.1.3902.4101.1.3.1.24.1";
         /**
          * 告警位置名称
          */
         String AlarmManagedObjectInstanceName = ".1.3.6.1.4.1.3902.4101.1.3.1.15";
+        /**
+         * 告警特殊原因
+         */
         String AlarmSpecificProblem = ".1.3.6.1.4.1.3902.4101.1.3.1.7";
         /**
          * 告警类型
@@ -66,9 +66,18 @@ public final class UMEConstants {
         /**
          * 网元类型
          */
-        String AlarmNetType = ".1.3.6.1.4.1.3902.4101.1.3.1.12";
-        String AlarmComment = ".1.3.6.1.4.1.3902.4101.1.3.1.10";
         String AlarmCreateTimePrefix = "1.3.6.1.4.1.3902.4101.1.3.1.3";
+
+        /**
+         * 网元名称
+         */
+        String AlarmMocObjectInstance = "1.3.6.1.4.1.3902.4101.1.3.1.26";
+
+        /**
+         * 告警确认状态
+         * 1 表示确认，2 示未确认。
+         */
+        String AlarmAck = ".1.3.6.1.4.1.3902.4101.1.3.1.18";
     }
 
 }

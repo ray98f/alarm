@@ -1,7 +1,8 @@
 package com.zte.snmp.util;
 
-import java.nio.charset.Charset;
 import lombok.experimental.UtilityClass;
+
+import java.nio.charset.Charset;
 
 @UtilityClass
 public class StringUtil {

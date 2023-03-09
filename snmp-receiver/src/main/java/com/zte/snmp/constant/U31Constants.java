@@ -29,19 +29,14 @@ public final class U31Constants {
 
     public interface Alarm {
 
-        String AlarmCodeName = ".1.3.6.1.4.1.3902.4101.1.3.1.14";
         /**
          * 告警码
          */
         String AlarmCode = ".1.3.6.1.4.1.3902.4101.1.3.1.11";
         /**
-         * 告警Id
-         */
-        String AlarmId = ".1.3.6.1.4.1.3902.4101.1.3.1.1";
-        /**
          * 网元类型
          */
-        String AlarmManagedObjectInstanceName = ".1.3.6.1.4.1.3902.4101.1.3.1.2";
+        String AlarmManagedObjectInstanceName = ".1.3.6.1.4.1.3902.4101.1.3.1.15";
         /**
          * 告警特殊原因
          */
@@ -50,15 +45,22 @@ public final class U31Constants {
         /**
          * 网元类型
          */
-        String AlarmNetType = ".1.3.6.1.4.1.3902.4101.1.3.1.12";
-        /**
-         * 告警注释
-         */
-        String AlarmComment = ".1.3.6.1.4.1.3902.4101.1.3.1.10";
+        String AlarmEventType = ".1.3.6.1.4.1.3902.4101.1.3.1.4";
         /**
          * 创建日期前缀
          */
         String AlarmCreateTimePrefix = "1.3.6.1.4.1.3902.4101.1.3.1.3";
+
+        /**
+         * 网元名称
+         */
+        String AlarmMocObjectInstance = "1.3.6.1.4.1.3902.4101.1.3.1.26";
+
+        /**
+         * 告警确认状态
+         * 1 表示确认，2 示未确认。
+         */
+        String AlarmAck = ".1.3.6.1.4.1.3902.4101.1.3.1.18";
     }
 
 }

@@ -7,6 +7,7 @@ import com.zte.snmp.constant.U31Constants;
 import com.zte.snmp.constant.U31Constants.Alarm;
 import com.zte.snmp.constant.U31Constants.Type;
 import com.zte.snmp.util.MessageSender;
+import com.zte.snmp.util.StringUtil;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,8 +17,9 @@ import org.snmp4j.PDU;
 import org.snmp4j.smi.OID;
 import org.snmp4j.smi.VariableBinding;
 
+import java.nio.charset.Charset;
 import java.time.LocalDateTime;
-import java.util.Arrays;
+import java.util.Collections;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -37,7 +39,7 @@ public class U31CommandResponderImpl implements IBaseCommandImpl, CommandRespond
                 String timeStr = null;
                 for (VariableBinding binding : pdu.getVariableBindings()) {
                     String oidStr = binding.getOid().format();
-                    log.info("OID :{} \t MSG:{}", oidStr, binding.getVariable().toString());
+                    log.debug("OID :{} \t MSG:{}", oidStr, binding.getVariable().toString());
                     if (oidStr.startsWith(Alarm.AlarmCreateTimePrefix)) {
                         timeStr = binding.getVariable().toString();
                     }
@@ -46,25 +48,29 @@ public class U31CommandResponderImpl implements IBaseCommandImpl, CommandRespond
                 SnmpAlarm dto = null;
                 switch (type.format()) {
                     case Type.CreateAlarm:
-                        log.info(systemCode + "系统,告警产生");
+                        log.debug(systemCode + "系统,告警产生");
                         dto = getAlarmDto(pdu, timeStr);
-                        dto.setCleared(false);
+                        if (dto != null) {
+                            dto.setCleared(false);
+                        }
                         break;
                     case Type.RecoverAlarm:
-                        log.info(systemCode + "系统,告警恢复");
+                        log.debug(systemCode + "系统,告警恢复");
                         dto = getAlarmDto(pdu, timeStr);
-                        dto.setCleared(true);
+                        if (dto != null) {
+                            dto.setCleared(true);
+                        }
                         break;
                     case Type.Heart:
-                        log.info(systemCode + "系统,心跳");
+                        log.debug(systemCode + "系统,心跳");
                         messageSender.sendHeartbeat(
-                            Arrays.asList(new Heartbeat(lineCode, systemCode, LocalDateTime.now())));
+                                Collections.singletonList(new Heartbeat(lineCode, systemCode, LocalDateTime.now())));
                         break;
                     default:
                 }
                 if (dto != null) {
                     log.info("{}", dto);
-//                    messageSender.sendSnmpAlarm(Collections.singletonList(dto));
+                    messageSender.sendSnmpAlarm(Collections.singletonList(dto));
                 }
             }
         } catch (Exception e) {
@@ -73,17 +79,29 @@ public class U31CommandResponderImpl implements IBaseCommandImpl, CommandRespond
     }
 
     private SnmpAlarm getAlarmDto(PDU pdu, String timeStr) {
-        String alarmCodeName = pdu.getVariable(new OID(Alarm.AlarmCodeName)).toString();
-        String alarmCode = pdu.getVariable(new OID(Alarm.AlarmCode)).toString();
-        log.info("告警码名称:{}", alarmCodeName);
-        String alarmManagedObjectInstanceName = pdu.getVariable(new OID(Alarm.AlarmManagedObjectInstanceName))
-            .toString();
-        String alarmSpecificProblem = pdu.getVariable(new OID(Alarm.AlarmSpecificProblem)).toString();
-        String alarmNetType = pdu.getVariable(new OID(Alarm.AlarmNetType)).toString();
-        SnmpAlarm dto = new SnmpAlarm(lineCode, systemCode, false, alarmManagedObjectInstanceName, alarmSpecificProblem,
-            alarmCode, alarmNetType, getTime(timeStr),
-            null, null);
-        return dto;
+        String alarmCode = pdu.getVariable(new OID(U31Constants.Alarm.AlarmCode)).toString();
+        // 盐盆站,机架=1,机框=1,槽位=8,端口=3
+        String alarmManagedObjectInstanceName = StringUtil.hexToString(
+                pdu.getVariable(new OID(U31Constants.Alarm.AlarmManagedObjectInstanceName)).toString().replaceAll(":", ""),
+                Charset.forName("GBK"));
+        try {
+            String[] strings = alarmManagedObjectInstanceName.split(",");
+            if (strings.length >= 4) {
+                String _alarmManagedObjectInstanceName = strings[1] + "," + strings[2] + "," + strings[3];
+                String alarmSpecificProblem = StringUtil.hexToString(
+                        pdu.getVariable(new OID(U31Constants.Alarm.AlarmSpecificProblem)).toString().replaceAll(":", ""),
+                        Charset.forName("GBK"));
+                String stationName = StringUtil.hexToString(
+                        pdu.getVariable(new OID(U31Constants.Alarm.AlarmMocObjectInstance)).toString().replaceAll(":", ""),
+                        Charset.forName("GBK"));
+                String alarmEventType = pdu.getVariable(new OID(U31Constants.Alarm.AlarmEventType)).toString();
+                return new SnmpAlarm(lineCode, systemCode, false, _alarmManagedObjectInstanceName,
+                        alarmSpecificProblem, alarmCode, alarmEventType, getTime(timeStr), null, stationToCode(stationName));
+            }
+            return null;
+        } catch (Exception e) {
+            log.error("错误非标字符串:{},{},", alarmManagedObjectInstanceName, e.getMessage(), e);
+            throw e;
+        }
     }
-
 }

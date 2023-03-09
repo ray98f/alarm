@@ -1,13 +1,10 @@
 package com.zte.snmp.service;
 
 import com.zte.snmp.config.SnmpSetting;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
 import org.apache.commons.lang3.StringUtils;
+
+import java.time.*;
+import java.time.format.DateTimeFormatter;
 
 public interface IBaseCommandImpl {
 
@@ -19,7 +16,8 @@ public interface IBaseCommandImpl {
 
     default LocalDateTime getTime(String time) {
         if (StringUtils.isEmpty(time)) {
-            return LocalDateTime.of(2000, 1, 1, 0, 0, 0);
+            String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            return LocalDateTime.parse(now, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         }
         String[] strings = time.split(",");
         /**
@@ -30,6 +28,7 @@ public interface IBaseCommandImpl {
                 LocalTime.parse(strings[1], DateTimeFormatter.ofPattern("HH:m:s[.n]")),
                 ZoneOffset.of(strings[2].split(":")[0])).toLocalDateTime();
         }
-        return LocalDateTime.of(2000, 1, 1, 0, 0, 0);
+        String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        return LocalDateTime.parse(now, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 }
