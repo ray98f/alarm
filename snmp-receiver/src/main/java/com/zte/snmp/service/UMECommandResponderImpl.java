@@ -97,9 +97,14 @@ public class UMECommandResponderImpl implements IBaseCommandImpl, CommandRespond
                 String stationName = StringUtil.hexToString(
                         pdu.getVariable(new OID(U31Constants.Alarm.AlarmMocObjectInstance)).toString().replaceAll(":", ""),
                         Charset.forName("GBK"));
+                Integer stationCode = stationToCode(stationName);
+                if (stationCode == null) {
+                    System.out.println("-------------------------- " + stationName + " --------------------------");
+                    return null;
+                }
                 String alarmEventType = pdu.getVariable(new OID(Alarm.AlarmEventType)).toString();
                 return new SnmpAlarm(lineCode, systemCode, false, _alarmManagedObjectInstanceName,
-                        alarmSpecificProblem, alarmCode, alarmEventType, getTime(timeStr), null, stationToCode(stationName));
+                        alarmSpecificProblem, alarmCode, alarmEventType, getTime(timeStr), null, stationCode);
             }
             return null;
         } catch (Exception e) {
