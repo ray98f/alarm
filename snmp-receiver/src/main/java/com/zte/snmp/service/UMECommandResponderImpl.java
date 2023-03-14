@@ -82,14 +82,18 @@ public class UMECommandResponderImpl implements IBaseCommandImpl, CommandRespond
     }
 
     private SnmpAlarm getAlarmDto(PDU pdu, String timeStr) {
+        String alarmSystemType = pdu.getVariable(new OID(Alarm.AlarmSystemType)).toString();
         String alarmCode = pdu.getVariable(new OID(Alarm.AlarmCode)).toString();
+        if (alarmSystemType != null && Long.parseLong(alarmSystemType) != 0) {
+            alarmCode = alarmSystemType + "-" + alarmCode;
+        }
         // 海城站,OIXG4A[0-1-13]-10GE:1
         String alarmManagedObjectInstanceName = StringUtil.hexToString(
                 pdu.getVariable(new OID(Alarm.AlarmManagedObjectInstanceName)).toString().replaceAll(":", ""),
                 Charset.forName("GBK"));
         try {
             String[] strings = alarmManagedObjectInstanceName.split(",");
-            if (strings.length == 2) {
+            if (strings.length >= 2) {
                 String _alarmManagedObjectInstanceName = strings[1].substring(0, strings[1].indexOf("]") + 1);
                 String alarmSpecificProblem = StringUtil.hexToString(
                         pdu.getVariable(new OID(Alarm.AlarmSpecificProblem)).toString().replaceAll(":", ""),
@@ -99,7 +103,7 @@ public class UMECommandResponderImpl implements IBaseCommandImpl, CommandRespond
                         Charset.forName("GBK"));
                 Integer stationCode = stationToCode(stationName);
                 if (stationCode == null) {
-                    System.out.println("-------------------------- " + stationName + " --------------------------");
+                    log.error("station.json 站点名称没有对应值：" + stationName);
                     return null;
                 }
                 String alarmEventType = pdu.getVariable(new OID(Alarm.AlarmEventType)).toString();

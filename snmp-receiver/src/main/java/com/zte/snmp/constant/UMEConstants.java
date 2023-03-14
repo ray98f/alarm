@@ -52,6 +52,10 @@ public final class UMEConstants {
          */
         String AlarmCode = ".1.3.6.1.4.1.3902.4101.1.3.1.11";
         /**
+         * 资源类型
+         */
+        String AlarmSystemType = ".1.3.6.1.4.1.3902.4101.1.3.1.16";
+        /**
          * 告警位置名称
          */
         String AlarmManagedObjectInstanceName = ".1.3.6.1.4.1.3902.4101.1.3.1.15";

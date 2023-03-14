@@ -8,15 +8,15 @@ spring:
     date-format: "yyyy-MM-dd HH:mm:ss"
   profiles:
     active: ${ENV:dev}
-#snmp:
-#  config:
-#    type: UME
-#    lineCode: 2
-#    systemCode: 1
-#    listen: udp:0.0.0.0/162
 snmp:
   config:
-    type: U31
+    type: UME
     lineCode: 2
-    systemCode: 9
-    listen: udp:0.0.0.0/163
+    systemCode: 1
+    listen: udp:0.0.0.0/162
+#snmp:
+#  config:
+#    type: U31
+#    lineCode: 2
+#    systemCode: 9
+#    listen: udp:0.0.0.0/163
