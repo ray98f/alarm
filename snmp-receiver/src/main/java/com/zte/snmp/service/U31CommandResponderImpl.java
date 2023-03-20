@@ -96,7 +96,7 @@ public class U31CommandResponderImpl implements IBaseCommandImpl, CommandRespond
                         Charset.forName("GBK"));
                 Integer stationCode = stationToCode(stationName);
                 if (stationCode == null) {
-                    System.out.println("-------------------------- " + stationName + " --------------------------");
+                    log.error("station.json 站点名称没有对应值：" + stationName);
                     return null;
                 }
                 String alarmEventType = pdu.getVariable(new OID(U31Constants.Alarm.AlarmEventType)).toString();

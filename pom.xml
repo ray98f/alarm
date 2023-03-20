@@ -12,7 +12,8 @@
         <module>demo</module>
         <module>core</module>
         <module>server</module>
-      <module>snmp-receiver</module>
+        <module>snmp-receiver</module>
+        <module>xml-receiver</module>
     </modules>
 
     <dependencies>

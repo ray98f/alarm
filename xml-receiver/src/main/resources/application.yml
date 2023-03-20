@@ -1,0 +1,8 @@
+server:
+  port: 8900
+
+soap-sender:
+  alarm: "0 */1 * * * ?"
+  function: "*/30 * * * * ?"
+  property: "0 0 7,15,23 * * ?"
+  dispose: "*/30 * * * * ?"
