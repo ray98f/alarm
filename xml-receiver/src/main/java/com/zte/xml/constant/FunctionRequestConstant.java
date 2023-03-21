@@ -13,7 +13,7 @@ public class FunctionRequestConstant {
             "         <v1:security>Api:Wzmtr@123</v1:security>\n" +
             "         <v1:communicationPattern>MultipleBatchResponse</v1:communicationPattern>\n" +
             "         <v1:communicationStyle>RPC</v1:communicationStyle>\n" +
-            "         <v1:requestedBatchSize>1</v1:requestedBatchSize>" +
+            "         <v1:requestedBatchSize>1</v1:requestedBatchSize>\n" +
             "      </v1:header>\n" +
             "   </soapenv:Header>\n" +
             "   <soapenv:Body>\n" +

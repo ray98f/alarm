@@ -10,9 +10,10 @@ public class AlarmRequestConstant {
             "         <v1:msgType>REQUEST</v1:msgType>\n" +
             "         <v1:senderURI>/MTOSI/InventoryOS</v1:senderURI>\n" +
             "         <v1:destinationURI>/MTOSI/EmsOS</v1:destinationURI>\n" +
-            "         <v1:communicationPattern>SimpleResponse</v1:communicationPattern>\n" +
+            "         <v1:communicationPattern>MultipleBatchResponse</v1:communicationPattern>\n" +
             "         <v1:communicationStyle>RPC</v1:communicationStyle>\n" +
             "         <v1:security>Api:Wzmtr@123</v1:security>\n" +
+            "         <v1:requestedBatchSize>10</v1:requestedBatchSize>\n" +
             "      </v1:header>\n" +
             "   </soapenv:Header>\n" +
             "   <soapenv:Body>\n" +
