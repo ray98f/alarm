@@ -19,6 +19,7 @@ public class AlarmRequestConstant {
             "   <soapenv:Body>\n" +
             "      <v11:getActiveAlarmsRequest>\n" +
             "         <v11:filter>\n" +
+            "            <v11:source>INTERNAL</v11:source>\n" +
             "            <v11:acknowledgeIndication>UNACKNOWLEDGED</v11:acknowledgeIndication>\n" +
             "         </v11:filter>\n" +
             "      </v11:getActiveAlarmsRequest>\n" +
