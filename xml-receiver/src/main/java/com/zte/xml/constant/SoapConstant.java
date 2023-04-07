@@ -27,5 +27,7 @@ public class SoapConstant {
 
     public static final String EQUIPMENT_INVENTORY_RETRIEVAL = "/EquipmentInventoryRetrieval";
 
+    public static final String CONNECTION_RETRIEVAL_RETRIEVAL = "/ConnectionRetrieval";
+
 
 }
