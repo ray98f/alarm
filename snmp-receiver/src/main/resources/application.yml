@@ -7,7 +7,7 @@ spring:
   jackson:
     date-format: "yyyy-MM-dd HH:mm:ss"
   profiles:
-    active: ${ENV:dev}
+    active: prod
 snmp:
   config:
     type: UME
