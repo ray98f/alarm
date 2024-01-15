@@ -7,3 +7,7 @@ soap-sender:
   property: "0 */1 * * * ?"
 #  property: "0 0 7,15,23 * * ?"
   dispose: "*/30 * * * * ?"
+
+logging:
+  level:
+    root: error
